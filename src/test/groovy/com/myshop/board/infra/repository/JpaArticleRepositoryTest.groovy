@@ -1,3 +1,5 @@
+package com.myshop.board.infra.repository
+
 import com.myshop.SpringIntTestConfig
 import com.myshop.board.domain.Article
 import com.myshop.board.domain.ArticleContent
