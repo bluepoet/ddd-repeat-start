@@ -1,0 +1,54 @@
+package com.myshop.order.command.domain;
+
+import com.myshop.member.domain.MemberId;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+/**
+ * Created by Mac on 2016. 6. 18..
+ */
+@Embeddable
+public class Orderer {
+
+    @Embedded
+    @AttributeOverrides(
+            @AttributeOverride(name = "id", column = @Column(name = "orderer_id"))
+    )
+    private MemberId memberId;
+
+    @Column(name = "orderer_name")
+    private String name;
+
+    private Orderer() {
+    }
+
+    public Orderer(MemberId memberId, String name) {
+        this.memberId = memberId;
+        this.name = name;
+    }
+
+    public MemberId getMemberId() {
+        return memberId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Orderer orderer = (Orderer) o;
+
+        return Objects.equals(memberId, orderer.memberId) &&
+                Objects.equals(name, orderer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memberId, name);
+    }
+}
