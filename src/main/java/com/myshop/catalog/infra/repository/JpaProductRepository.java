@@ -17,6 +17,19 @@ public class JpaProductRepository implements ProductRepository {
     private EntityManager entityManager;
 
     @Override
+    public void save(Product product) {
+        entityManager.persist(product);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        TypedQuery<Product> query = entityManager.createQuery(
+                "select p from Product p order by p.id.id desc",
+                Product.class);
+        return query.getResultList();
+    }
+
+    @Override
     public Product findById(ProductId id) {
         return entityManager.find(Product.class, id);
     }
