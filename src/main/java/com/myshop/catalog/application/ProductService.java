@@ -34,7 +34,7 @@ public class ProductService {
         if (category == null) throw new NoCategoryException();
 
         List<Product> products = productRepository.findByCategoryId(category.getId(), page, size);
-        return new CategoryProduct(category, toSummary(products), page, size, productRepository.countByCategoryId(category.getId()));
+        return new CategoryProduct(category, toSummary(products), page, size, productRepository.countsByCategoryId(category.getId()));
     }
 
     private List<ProductSummary> toSummary(List<Product> products) {

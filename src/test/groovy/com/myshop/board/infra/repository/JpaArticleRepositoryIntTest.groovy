@@ -12,12 +12,12 @@ import spock.lang.Specification
 
 
 /**
- * Created by Mac on 2016. 6. 28..
+ * Created by bluepoet on 2016. 6. 28..
  */
 @SpringIntTestConfig
 @Transactional
 @Rollback(false)
-class JpaArticleRepositoryTest extends Specification {
+class JpaArticleRepositoryIntTest extends Specification {
     @Autowired
     ArticleRepository articleRepository
 

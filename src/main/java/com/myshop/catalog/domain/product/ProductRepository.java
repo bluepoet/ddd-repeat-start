@@ -16,5 +16,7 @@ public interface ProductRepository {
 
     List<Product> findByCategoryId(CategoryId categoryId, int page, int size);
 
-    long countByCategoryId(CategoryId id);
+    long countsByCategoryId(CategoryId id);
+
+    void remove(Product product);
 }

@@ -47,12 +47,17 @@ public class JpaProductRepository implements ProductRepository {
     }
 
     @Override
-    public long countByCategoryId(CategoryId categoryId) {
+    public long countsByCategoryId(CategoryId categoryId) {
         TypedQuery<Long> query = entityManager.createQuery(
                 "select count(p) from Product p where :catId member of p.categoryIds",
                 Long.class);
         query.setParameter("catId", categoryId);
         return query.getSingleResult().longValue();
+    }
+
+    @Override
+    public void remove(Product product) {
+        entityManager.remove(product);
     }
 
 }
