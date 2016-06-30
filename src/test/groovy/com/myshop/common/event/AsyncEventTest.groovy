@@ -9,7 +9,7 @@ import java.util.concurrent.Executors
  * Created by Mac on 2016. 7. 1..
  */
 class AsyncEventTest extends Specification {
-    def "비동기를 이벤트를 발생시키고 처리되었는지 확인한다."() {
+    def "비동기처리 핸들러를 등록한 뒤, 이벤트를 발생시키고 처리에 예외가 없는지 확인한다."() {
         given:
         Events.init(Executors.newFixedThreadPool(3))
         Events.handleAsync({ evt -> throw new RuntimeException("") })
