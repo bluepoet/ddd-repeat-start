@@ -9,7 +9,7 @@ import spock.lang.Specification
 
 
 /**
- * Created by Mac on 2016. 7. 8..
+ * Created by bluepoet on 2016. 7. 8..
  */
 @SpringIntTestConfig
 class JpaOrderViewDaoIntTest extends Specification {
