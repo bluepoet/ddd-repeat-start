@@ -1,12 +1,18 @@
 package com.myshop.order.infra.repository
 
 import com.myshop.SpringIntTestConfig
+import com.myshop.common.jpaspec.Specs
 import com.myshop.order.command.domain.OrderNo
 import com.myshop.order.command.domain.OrderRepository
+import com.myshop.order.command.domain.OrderSpecs
+import com.myshop.order.command.domain.OrdererSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 import spock.lang.Specification
 
+import java.sql.Date
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  * Created by bluepoet on 2016. 7. 12..
@@ -18,7 +24,7 @@ class JpaOrderRepositoryIntTest extends Specification {
     @Autowired
     def OrderRepository orderRepository
 
-    def "user1 사용자의 주문목록을 확인한다."() {
+    def "주문자 아이디(user1)로 주문정보을 확인한다."() {
         given:
         def ordererId = "user1"
         def startRow = 0
@@ -43,5 +49,59 @@ class JpaOrderRepositoryIntTest extends Specification {
 
         then:
         order.getOrderLines().size() == 1
+    }
+
+    def "Specification(OrderSpec)을 이용해 주문정보를 확인한다."() {
+        given:
+        def spec = new OrdererSpec("user1")
+
+        when:
+        def orders = orderRepository.findAll(spec, "number.number desc")
+
+        then:
+        orders.size() == 2
+        orders.get(1).getOrderLines().size() == 2
+    }
+
+    def "두개 Specification을 and로 묶어 주문정보를 확인한다."() {
+        given:
+        def specs = createSpecification()
+
+        when:
+        def orders = orderRepository.findAll(specs, "orderer.memberId.id asc", "number.number desc")
+
+        then:
+        orders.size() == 1
+    }
+
+    def "Specification으로 검색한 결과를 카운트한다."() {
+        given:
+        def specs = createSpecification()
+
+        when:
+        def counts = orderRepository.counts(specs)
+
+        then:
+        counts.longValue() == 1L
+    }
+
+    def createSpecification() {
+        def fromTime = LocalDateTime.of(2016, 1, 1, 0, 0, 0);
+        def toTime = LocalDateTime.of(2016, 1, 2, 0, 0, 0);
+        return Specs.and(
+                OrderSpecs.orderer("user1"),
+                OrderSpecs.between(
+                        Date.from(fromTime.atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(toTime.atZone(ZoneId.systemDefault()).toInstant())
+                )
+        )
+    }
+
+    def "모든 주문목록을 카운트한다."() {
+        when:
+        def counts = orderRepository.countsAll()
+
+        then:
+        counts.longValue() == 3
     }
 }

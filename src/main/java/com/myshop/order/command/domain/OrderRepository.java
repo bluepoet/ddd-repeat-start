@@ -1,5 +1,7 @@
 package com.myshop.order.command.domain;
 
+import com.myshop.common.jpaspec.Specification;
+
 import java.util.List;
 
 /**
@@ -14,4 +16,9 @@ public interface OrderRepository {
 
     List<Order> findByOrdererId(String ordererId, int startRow, int fetchSize);
 
+    List<Order> findAll(Specification<Order> spec, String ... orders);
+
+    Long counts(Specification<Order> spec);
+
+    Long countsAll();
 }
