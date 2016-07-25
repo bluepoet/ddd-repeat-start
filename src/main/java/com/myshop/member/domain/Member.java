@@ -1,5 +1,7 @@
 package com.myshop.member.domain;
 
+import com.myshop.common.event.Events;
+
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -42,4 +44,8 @@ public class Member {
         return Integer.toHexString(number);
     }
 
+    public void block() {
+        this.blocked = true;
+        Events.raise(new MemberBlockedEvent(id.getId()));
+    }
 }
