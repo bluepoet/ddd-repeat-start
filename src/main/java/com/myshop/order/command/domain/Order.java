@@ -151,4 +151,10 @@ public class Order {
             throw new OrderAlreadyCanceledException();
         }
     }
+
+    public void changeShippingInfo(ShippingInfo newShippingInfo) {
+        verifyNotYetShipped();
+        setShippingInfo(newShippingInfo);
+        Events.raise(new ShippingInfoChangedEvent(number, newShippingInfo));
+    }
 }

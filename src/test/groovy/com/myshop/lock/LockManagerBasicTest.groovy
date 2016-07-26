@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import spock.lang.Specification
 
+import java.sql.Timestamp
+
 
 /**
  * Created by bluepoet on 2016. 7. 26..
@@ -40,5 +42,19 @@ class LockManagerBasicTest extends Specification {
                 Integer.class,
                 "type1", "id1").intValue()
         count == 0
+    }
+
+    def "잠금이 만료되었을 때, 락을 얻는다."() {
+        given:
+        jdbcTemplate.update("insert into locks values (?, ?, ?, ?)",
+                "type2", "id2", "lockid", new Timestamp(System.currentTimeMillis() - 1000))
+        LockId lock
+
+        when:
+        lock = lockManager.tryLock("type2", "id2")
+
+        then:
+        notThrown LockException
+        lockManager.releaseLock(lock)
     }
 }
