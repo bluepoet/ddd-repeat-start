@@ -30,8 +30,8 @@ class OptimisticLockTest extends Specification {
         def executorService = Executors.newFixedThreadPool(3)
 
         when:
-        Future<Result> changeResult = executorService.submit({ -> changeShippingInfo() } as Callable<Result>)
-        Future<Result> startResult = executorService.submit({ -> startShipping() } as Callable<Result>)
+        Future<Result> changeResult = executorService.submit({ changeShippingInfo() } as Callable<Result>)
+        Future<Result> startResult = executorService.submit({ startShipping() } as Callable<Result>)
 
         then:
         changeResult.get().isSuccess() == true

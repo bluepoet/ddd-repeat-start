@@ -2,6 +2,8 @@
 
 ddd-start 프로젝트에서 java+junit으로 되어 있던 테스트코드를 groovy+spock으로 포팅한다.
 
+테스트 
+
 # 예제 안내
 
 ## 준비
