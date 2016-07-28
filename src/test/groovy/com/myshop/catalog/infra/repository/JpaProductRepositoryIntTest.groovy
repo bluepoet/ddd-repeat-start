@@ -1,4 +1,4 @@
-package catalog.infra.repository
+package com.myshop.catalog.infra.repository
 
 import com.myshop.SpringIntTestConfig
 import com.myshop.catalog.domain.category.CategoryId
