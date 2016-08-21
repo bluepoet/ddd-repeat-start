@@ -30,7 +30,7 @@ public class CancelOrderService {
         }
         order.cancel();
 
-        Events.reset();  // 반복되는 코드는 AOP로 처리할 수 있음
+//        Events.reset();  // 반복되는 코드는 AOP로 처리할 수 있음
     }
 
     private Order findOrder(OrderNo orderNo) {

@@ -16,4 +16,9 @@ public class EventStoreHandler implements EventHandler<Object> {
     public void handle(Object event) {
         eventStore.save(event);
     }
+
+    @Autowired
+    public void setEventStore(EventStore eventStore) {
+        this.eventStore = eventStore;
+    }
 }
