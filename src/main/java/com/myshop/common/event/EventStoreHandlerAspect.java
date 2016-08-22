@@ -20,4 +20,9 @@ public class EventStoreHandlerAspect {
     public void registerEventStoreHandler() throws Throwable {
         Events.handle(eventStoreHandler);
     }
+
+    @Autowired
+    public void setEventStoreHandler(EventStoreHandler eventStoreHandler) {
+        this.eventStoreHandler = eventStoreHandler;
+    }
 }
