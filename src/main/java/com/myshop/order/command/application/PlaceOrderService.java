@@ -42,4 +42,14 @@ public class PlaceOrderService {
         orderRepository.save(order);
         return orderNo;
     }
+
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    @Autowired
+    public void setOrderRepository(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 }
